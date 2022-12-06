@@ -3,13 +3,16 @@ using UnityEngine;
 namespace Scripts
 {
     [RequireComponent(typeof(Player))]
+    [RequireComponent(typeof(BricksHolder))]
     public class PlayerCollisionHandler : MonoBehaviour
     {
         private Player _player;
+        private BricksHolder _bricksHolder;
 
         private void Start()
         {
             _player = GetComponent<Player>();
+            _bricksHolder = GetComponent<BricksHolder>();
         }
 
         private void OnTriggerEnter(Collider other)
@@ -23,7 +26,8 @@ namespace Scripts
 
         private void CollectBricks(Brick brick)
         {
-            Destroy(brick.gameObject);
+            _bricksHolder.Add(brick);
+            brick.gameObject.GetComponent<Collider>().enabled = false;
         }
     }
 }
